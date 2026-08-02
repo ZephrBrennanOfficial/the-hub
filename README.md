@@ -1,8 +1,8 @@
-# Zephr Brennan — Everything I Build
+# The Hub
 
-🌐 **[Hub Site](https://zephrbrennanofficial.github.io/zephr-brennan/)** · 📂 **[Portfolio](https://zephrbrennanofficial.github.io/portfolio/)** · ✍️ **[Quill — Ghostwriting](https://zephrbrennanofficial.github.io/ghostwriting/)** · 📖 **[Substack](https://zephrbrennan.substack.com)** · 💼 **[LinkedIn](https://www.linkedin.com/in/zephrbrennan)**
+🌐 **[The Hub](https://zephrbrennanofficial.github.io/the-hub/)** · 📂 **[Portfolio](https://zephrbrennanofficial.github.io/portfolio/)** · ✍️ **[Quill — Ghostwriting](https://zephrbrennanofficial.github.io/ghostwriting/)** · 📖 **[Substack](https://zephrbrennan.substack.com)** · 💼 **[LinkedIn](https://www.linkedin.com/in/zephrbrennan)**
 
-One repo. Everything I build — merged, organized, and accessible from a single interactive hub.
+Everything Zephr Brennan builds — merged into one repo with an interactive hub site. All my sales frameworks, case studies, practice logs, NZ policy analysis, and ghostwriting resources in one place.
 
 ---
 
@@ -18,7 +18,7 @@ One repo. Everything I build — merged, organized, and accessible from a single
 
 ## Live Sites
 
-- **[Hub](https://zephrbrennanofficial.github.io/zephr-brennan/)** — this repo's site. Interactive overview of everything.
+- **[The Hub](https://zephrbrennanofficial.github.io/the-hub/)** — this repo's site. Interactive overview of everything.
 - **[Portfolio](https://zephrbrennanofficial.github.io/portfolio/)** — personal portfolio, values, writing, projects.
 - **[Quill](https://zephrbrennanofficial.github.io/ghostwriting/)** — LinkedIn ghostwriting service for founders.
 
