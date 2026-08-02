@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zephr Brennan — Everything I Build</title>
+  <meta name="description" content="One hub for everything Zephr Brennan builds — portfolio, Quill ghostwriting, sales frameworks, case studies, NZ policy analysis, and learning resources.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Zephr Brennan — Everything I Build">
+  <meta property="og:description" content="Portfolio, Quill ghostwriting, sales frameworks, case studies, NZ policy, and learning — all in one place.">
+  <meta property="og:image" content="https://media.base44.com/images/public/6a6e5d661c68f94a6ec47f21/ef7b90eb2_generated_image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --white:#fff;--off-white:#FAFAF8;--cream:#F5F1E8;--cream-mid:#EDE7D8;--cream-border:#DDD5C2;
+      --gold:#C5A558;--gold-dark:#A88A45;--gold-light:#D4B970;--gold-pale:#F3EDD8;
+      --black:#1A1A1A;--black-soft:#2D2A26;--text-muted:#6B6358;--text-mid:#4A4540;
+      --shadow-sm:0 2px 12px rgba(26,26,26,0.06);--shadow-md:0 8px 32px rgba(26,26,26,0.09);
+      --shadow-lg:0 20px 60px rgba(26,26,26,0.12);--shadow-gold:0 8px 32px rgba(197,165,88,0.18);
+      --radius:20px;--radius-sm:12px;--max-w:1200px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;background:var(--white)}
+    body{font-family:'Inter',-apple-system,sans-serif;color:var(--black);line-height:1.7;background:var(--white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:700;line-height:1.15;letter-spacing:-0.02em}
+    a{color:var(--gold-dark);text-decoration:none}
+
+    .scroll-progress{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-light));z-index:9999;transition:width .1s ease}
+    .scroll-top{position:fixed;bottom:2rem;right:2rem;width:48px;height:48px;border-radius:50%;background:var(--white);color:var(--gold-dark);border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transform:translateY(16px);transition:all .3s ease;z-index:9998;box-shadow:var(--shadow-md)}
+    .scroll-top.visible{opacity:1;transform:translateY(0)}
+    .scroll-top:hover{background:var(--gold);color:var(--white);transform:translateY(-3px) scale(1.05);box-shadow:var(--shadow-gold)}
+    .scroll-top svg{width:18px;height:18px}
+
+    /* Nav */
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--cream-border);transition:box-shadow .3s ease}
+    nav.scrolled{box-shadow:var(--shadow-sm)}
+    .nav-inner{max-width:var(--max-w);margin:0 auto;padding:0 2.5rem;height:68px;display:flex;align-items:center;justify-content:space-between}
+    .nav-logo{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:700;color:var(--black);cursor:pointer}
+    .nav-links{display:flex;align-items:center;gap:2rem}
+    .nav-links a{font-size:.88rem;font-weight:500;color:var(--text-mid);transition:color .2s ease}
+    .nav-links a:hover{color:var(--gold-dark)}
+    .nav-cta{background:var(--gold)!important;color:var(--black)!important;padding:.6rem 1.4rem;border-radius:9999px;font-weight:600!important;font-size:.85rem!important;transition:all .25s ease!important}
+    .nav-cta:hover{background:var(--gold-dark)!important;color:var(--white)!important;transform:translateY(-1px);box-shadow:var(--shadow-gold)}
+    .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+    .nav-hamburger span{display:block;width:24px;height:2px;background:var(--black);border-radius:2px;transition:all .3s ease}
+    @media(max-width:900px){
+      .nav-hamburger{display:flex}
+      .nav-links{display:none;position:absolute;top:68px;left:0;right:0;background:var(--white);flex-direction:column;padding:1.5rem 2rem;gap:1.25rem;border-bottom:1px solid var(--cream-border);box-shadow:var(--shadow-md)}
+      .nav-links.open{display:flex}
+      .nav-cta{width:fit-content}
+    }
+
+    /* Buttons */
+    .btn-primary{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 2rem;background:var(--gold);color:var(--black);border-radius:9999px;font-size:.92rem;font-weight:700;border:none;cursor:pointer;transition:all .25s ease;box-shadow:0 4px 16px rgba(197,165,88,0.25)}
+    .btn-primary:hover{background:var(--gold-dark);color:var(--white);transform:translateY(-2px);box-shadow:0 8px 28px rgba(197,165,88,0.35)}
+    .btn-secondary{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 2rem;background:var(--white);color:var(--black);border-radius:9999px;font-size:.92rem;font-weight:600;border:1.5px solid var(--cream-border);cursor:pointer;transition:all .25s ease}
+    .btn-secondary:hover{border-color:var(--gold);color:var(--gold-dark);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+
+    /* Sections */
+    .section{padding:5rem 2.5rem;max-width:var(--max-w);margin:0 auto}
+    .section-full{padding:5rem 2.5rem;background:var(--off-white)}
+    .section-full .section-inner{max-width:var(--max-w);margin:0 auto}
+    .section-cream{padding:5rem 2.5rem;background:var(--cream)}
+    .section-cream .section-inner{max-width:var(--max-w);margin:0 auto}
+    .section-dark{padding:5rem 2.5rem;background:var(--black)}
+    .section-dark .section-inner{max-width:var(--max-w);margin:0 auto}
+    .section-label{font-size:.75rem;font-weight:700;color:var(--gold-dark);text-transform:uppercase;letter-spacing:.14em;margin-bottom:.6rem}
+    .section-heading{font-size:clamp(1.6rem,3vw,2.2rem);color:var(--black);margin-bottom:.75rem}
+    .section-heading .gold{color:var(--gold-dark)}
+    .section-sub{font-size:1rem;color:var(--text-muted);max-width:620px;line-height:1.75;margin-bottom:2.5rem}
+    .divider{height:1px;background:linear-gradient(90deg,transparent,var(--cream-border),transparent)}
+    .section-dark .section-label{color:var(--gold-light)}
+    .section-dark .section-heading{color:var(--white)}
+    .section-dark .section-heading .gold{color:var(--gold-light)}
+    .section-dark .section-sub{color:rgba(255,255,255,0.6)}
+
+    /* Hero */
+    .hero{padding-top:calc(68px + 4.5rem);padding-bottom:4rem;max-width:var(--max-w);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4rem;padding-left:2.5rem;padding-right:2.5rem}
+    @media(max-width:900px){.hero{grid-template-columns:1fr;padding-top:100px;gap:2.5rem}.hero-img-col{order:-1}}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:9999px;background:var(--gold-pale);border:1px solid rgba(197,165,88,0.3);color:var(--gold-dark);font-size:.78rem;font-weight:600;margin-bottom:1.75rem;text-transform:uppercase;letter-spacing:.04em}
+    .pulse-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);position:relative;flex-shrink:0}
+    .pulse-dot::after{content:'';position:absolute;top:-3px;left:-3px;right:-3px;bottom:-3px;border-radius:50%;border:1.5px solid var(--gold);animation:pulseRing 1.8s ease-out infinite}
+    @keyframes pulseRing{0%{opacity:.8;transform:scale(.9)}80%{opacity:0;transform:scale(2)}100%{opacity:0;transform:scale(2)}}
+    .hero h1{font-size:clamp(2.2rem,4vw,3.6rem);color:var(--black);margin-bottom:1.25rem}
+    .hero h1 .gold{color:var(--gold-dark)}
+    .hero-text{font-size:1.05rem;color:var(--text-muted);line-height:1.75;margin-bottom:2rem;max-width:480px}
+    .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+    .hero-img-col{position:relative}
+    .hero-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius);box-shadow:var(--shadow-lg)}
+    .hero-img-badge{position:absolute;bottom:-16px;left:-16px;background:var(--white);border:1px solid var(--cream-border);border-radius:var(--radius-sm);padding:1rem 1.25rem;box-shadow:var(--shadow-md);display:flex;align-items:center;gap:.75rem;max-width:240px}
+    .hero-img-badge .badge-icon{width:36px;height:36px;background:var(--gold-pale);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .hero-img-badge .badge-icon svg{width:18px;height:18px;stroke:var(--gold-dark);fill:none;stroke-width:2}
+    .hero-img-badge p{font-size:.78rem;color:var(--text-muted);line-height:1.3}
+    .hero-img-badge strong{font-size:.85rem;color:var(--black);display:block;font-weight:700}
+
+    /* Stats */
+    .stats-row{display:flex;gap:2.5rem;flex-wrap:wrap;margin-top:.5rem}
+    .stat{text-align:left}
+    .stat-num{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:800;color:var(--gold-dark)}
+    .stat-label{font-size:.8rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em}
+
+    /* Project cards */
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+    .project-card{background:var(--white);border:1px solid var(--cream-border);border-radius:var(--radius);padding:2rem 1.75rem;transition:all .3s ease;display:flex;flex-direction:column;cursor:pointer}
+    .project-card:hover{border-color:var(--gold);box-shadow:var(--shadow-md);transform:translateY(-4px)}
+    .project-icon{width:44px;height:44px;background:var(--gold-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;transition:all .3s ease}
+    .project-card:hover .project-icon{background:var(--gold)}
+    .project-icon svg{width:20px;height:20px;stroke:var(--gold-dark);fill:none;stroke-width:2;transition:stroke .3s ease}
+    .project-card:hover .project-icon svg{stroke:var(--white)}
+    .project-card h3{font-size:1.05rem;margin-bottom:.5rem}
+    .project-card p{font-size:.88rem;color:var(--text-muted);line-height:1.6;flex:1;margin-bottom:1rem}
+    .tags{display:flex;gap:.4rem;flex-wrap:wrap}
+    .tag{font-size:.72rem;font-weight:600;color:var(--gold-dark);background:var(--gold-pale);border-radius:9999px;padding:3px 10px}
+    .project-link{font-size:.85rem;font-weight:600;color:var(--gold-dark);display:inline-flex;align-items:center;gap:.3rem;margin-top:auto;transition:gap .2s ease}
+    .project-card:hover .project-link{gap:.6rem}
+
+    /* Collection cards (for merged repos) */
+    .collection-card{background:var(--white);border:1px solid var(--cream-border);border-radius:var(--radius);overflow:hidden;transition:all .3s ease}
+    .collection-card:hover{border-color:var(--gold);box-shadow:var(--shadow-md);transform:translateY(-3px)}
+    .collection-header{padding:1.75rem 1.75rem 1rem}
+    .collection-header h3{font-size:1.1rem;margin-bottom:.3rem}
+    .collection-header p{font-size:.85rem;color:var(--text-muted);line-height:1.55}
+    .collection-files{padding:0 1.75rem 1.25rem}
+    .file-item{display:flex;align-items:center;justify-content:space-between;padding:.6rem .75rem;border-radius:8px;font-size:.84rem;color:var(--text-mid);transition:all .2s ease;cursor:pointer;text-decoration:none}
+    .file-item:hover{background:var(--off-white);color:var(--gold-dark)}
+    .file-item svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0;margin-right:.5rem}
+    .file-name{display:flex;align-items:center}
+    .file-size{font-size:.72rem;color:var(--text-muted);font-weight:400}
+
+    /* Socials */
+    .socials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem}
+    .social-btn{display:flex;align-items:center;gap:.75rem;padding:1.1rem 1.4rem;background:var(--white);border:1px solid var(--cream-border);border-radius:var(--radius-sm);font-size:.9rem;font-weight:600;color:var(--black);transition:all .25s ease;cursor:pointer}
+    .social-btn svg{width:20px;height:20px;fill:var(--text-muted);flex-shrink:0;transition:fill .25s ease}
+    .social-btn:hover{border-color:var(--gold);box-shadow:var(--shadow-sm);color:var(--gold-dark);transform:translateY(-2px)}
+    .social-btn:hover svg{fill:var(--gold-dark)}
+
+    /* Split */
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    @media(max-width:800px){.split{grid-template-columns:1fr;gap:2rem}}
+    .split-img{width:100%;border-radius:var(--radius);aspect-ratio:4/3;object-fit:cover;box-shadow:var(--shadow-lg)}
+
+    /* About */
+    .about-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:start}
+    @media(max-width:800px){.about-grid{grid-template-columns:1fr;gap:2rem}}
+    .about-text p{font-size:.95rem;color:var(--text-muted);line-height:1.85}
+    .about-text p+p{margin-top:1rem}
+    .about-text strong{color:var(--black)}
+    .about-quote{background:var(--gold-pale);border-left:4px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:1.25rem 1.5rem;margin-top:1.5rem}
+    .about-quote p{font-family:'Fraunces',serif;font-size:1.02rem;color:var(--black-soft);font-style:italic;line-height:1.65}
+
+    /* Info cards */
+    .info-card{background:var(--white);border:1px solid var(--cream-border);border-radius:var(--radius-sm);padding:1.75rem;transition:all .25s ease}
+    .info-card:hover{border-color:var(--gold);box-shadow:var(--shadow-sm)}
+    .info-icon{width:40px;height:40px;background:var(--gold-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:.75rem}
+    .info-icon svg{width:18px;height:18px;stroke:var(--gold-dark);fill:none;stroke-width:2}
+    .info-card h3{font-size:.95rem;margin-bottom:.3rem}
+    .info-card p{font-size:.84rem;color:var(--text-muted);line-height:1.55}
+
+    /* Footer */
+    footer{background:var(--black);color:rgba(255,255,255,0.5);text-align:center;padding:3rem 2.5rem}
+    .footer-name{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:700;color:var(--white);margin-bottom:.5rem}
+    .footer-links{display:flex;justify-content:center;gap:1.75rem;flex-wrap:wrap;margin:.75rem 0 1.25rem}
+    .footer-links a{font-size:.82rem;color:rgba(255,255,255,0.6);transition:color .2s ease}
+    .footer-links a:hover{color:var(--gold-light)}
+    footer .gold{color:var(--gold)}
+
+    /* Animations */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+    .animate{opacity:0}
+    .animate.in-view{animation:fadeUp .65s cubic-bezier(0.16,1,0.3,1) forwards}
+    .d1{animation-delay:.05s}.d2{animation-delay:.12s}.d3{animation-delay:.2s}.d4{animation-delay:.28s}.d5{animation-delay:.36s}.d6{animation-delay:.44s}.d7{animation-delay:.52s}.d8{animation-delay:.6s}
+
+    /* Tab system for collections */
+    .tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem}
+    .tab{padding:.6rem 1.25rem;border-radius:9999px;font-size:.85rem;font-weight:600;color:var(--text-mid);background:var(--white);border:1px solid var(--cream-border);cursor:pointer;transition:all .25s ease}
+    .tab:hover{border-color:var(--gold-light);color:var(--gold-dark)}
+    .tab.active{background:var(--gold);color:var(--black);border-color:var(--gold)}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <!-- Nav -->
+  <nav id="mainNav">
+    <div class="nav-inner">
+      <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">Zephr Brennan</div>
+      <div class="nav-hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="nav-links" id="navLinks">
+        <a href="#sites">Sites</a>
+        <a href="#collections">Work</a>
+        <a href="#about">About</a>
+        <a href="#socials">Connect</a>
+        <a href="https://zephrbrennanofficial.github.io/ghostwriting/" target="_blank" class="nav-cta">Quill →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow animate d1"><span class="pulse-dot"></span> Everything I build — in one place</div>
+      <h1 class="animate d2">Zephr <span class="gold">Brennan.</span></h1>
+      <p class="hero-text animate d3">Writer, builder, and lifelong learner based in Auckland, Aotearoa NZ. Building a career from the ground up in sales, strategy, and AI — and documenting every step. This is the hub for everything: my portfolio, my ghostwriting service, my frameworks, my research, and my writing.</p>
+      <div class="hero-actions animate d4">
+        <a href="#sites" class="btn-primary">Explore everything →</a>
+        <a href="https://zephrbrennanofficial.github.io/ghostwriting/" target="_blank" class="btn-secondary">Visit Quill</a>
+      </div>
+      <div class="stats-row animate d5">
+        <div class="stat"><div class="stat-num">2</div><div class="stat-label">Live Sites</div></div>
+        <div class="stat"><div class="stat-num">5</div><div class="stat-label">Collections</div></div>
+        <div class="stat"><div class="stat-num">30+</div><div class="stat-label">Documents</div></div>
+        <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Curiosity</div></div>
+      </div>
+    </div>
+    <div class="hero-img-col animate d3">
+      <img src="https://media.base44.com/images/public/6a6e5d661c68f94a6ec47f21/ef7b90eb2_generated_image.png" alt="Workspace" class="hero-img">
+      <div class="hero-img-badge">
+        <div class="badge-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+        <div><strong>Building in public</strong><p>Every rep. Every day.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Live Sites -->
+  <div class="section" id="sites">
+    <p class="section-label animate d1">Live Sites</p>
+    <h2 class="section-heading animate d2">The <span class="gold">two sites</span></h2>
+    <p class="section-sub animate d3">Two separate live websites, each with a different purpose. This hub ties them together.</p>
+    <div class="projects-grid">
+      <a href="https://zephrbrennanofficial.github.io/portfolio/" target="_blank" class="project-card animate d1">
+        <div class="project-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <h3>Personal Portfolio</h3>
+        <p>My values, writing, projects, and what I'm building. The professional hub for who I am and what I stand for.</p>
+        <div class="tags"><span class="tag">Portfolio</span><span class="tag">Values</span><span class="tag">Writing</span></div>
+        <span class="project-link">Visit site →</span>
+      </a>
+      <a href="https://zephrbrennanofficial.github.io/ghostwriting/" target="_blank" class="project-card animate d2">
+        <div class="project-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <h3>Quill — Ghostwriting</h3>
+        <p>LinkedIn ghostwriting service for founders. Voice capture, 15 posts/month, engagement tracking. First 4 posts free.</p>
+        <div class="tags"><span class="tag">Service</span><span class="tag">Ghostwriting</span><span class="tag">LinkedIn</span></div>
+        <span class="project-link">Visit Quill →</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Collections (merged repos) -->
+  <div class="section-cream" id="collections">
+    <div class="section-inner">
+      <p class="section-label animate d1">All My Work</p>
+      <h2 class="section-heading animate d2">Collections</h2>
+      <p class="section-sub animate d3">Every repo I've built, merged into one place. Sales frameworks, case studies, practice logs, NZ policy analysis, and ghostwriting resources. All public. All in progress.</p>
+      
+      <div class="tabs animate d3">
+        <div class="tab active" onclick="switchTab(this,'tab-sales')">Sales Toolkit</div>
+        <div class="tab" onclick="switchTab(this,'tab-cases')">Case Studies</div>
+        <div class="tab" onclick="switchTab(this,'tab-practice')">Practice Lab</div>
+        <div class="tab" onclick="switchTab(this,'tab-policy')">NZ Policy</div>
+        <div class="tab" onclick="switchTab(this,'tab-quill')">Quill Resources</div>
+      </div>
+
+      <!-- Sales Toolkit -->
+      <div class="tab-panel active" id="tab-sales">
+        <div class="collection-card animate d3">
+          <div class="collection-header">
+            <h3>Sales Consulting Toolkit</h3>
+            <p>Practical sales frameworks — audit checklists, discovery templates, ROI calculator, outreach scripts, and objection handling.</p>
+          </div>
+          <div class="collection-files">
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/sales-consulting-toolkit/01-sales-audit-framework.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Sales Audit Framework</span>
+              <span class="file-size">13 KB</span>
+            </a>
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/sales-consulting-toolkit/02-discovery-call-template.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Discovery Call Template</span>
+              <span class="file-size">9 KB</span>
+            </a>
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/sales-consulting-toolkit/03-roi-calculator.html" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> ROI Calculator (Interactive)</span>
+              <span class="file-size">23 KB</span>
+            </a>
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/sales-consulting-toolkit/04-outreach-templates.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Outreach Templates</span>
+              <span class="file-size">8 KB</span>
+            </a>
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/sales-consulting-toolkit/05-sales-process-roadmap.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Sales Process Roadmap</span>
+              <span class="file-size">11 KB</span>
+            </a>
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/sales-consulting-toolkit/06-objection-handling-quick-reference.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Objection Handling Reference</span>
+              <span class="file-size">12 KB</span>
+            </a>
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/sales-consulting-toolkit/07-objection-too-expensive.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Objection: "Too Expensive"</span>
+              <span class="file-size">2 KB</span>
+            </a>
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/sales-consulting-toolkit/08-psychology-first-90-seconds.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Psychology: First 90 Seconds</span>
+              <span class="file-size">3 KB</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case Studies -->
+      <div class="tab-panel" id="tab-cases">
+        <div class="collection-card animate d3">
+          <div class="collection-header">
+            <h3>Business Case Studies</h3>
+            <p>Practice case studies — breaking down real sales problems with data and frameworks. Market analysis, sales diagnostics, and revenue modeling.</p>
+          </div>
+          <div class="collection-files">
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/business-case-studies/01-cost-of-slow-lead-response.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Cost of Slow Lead Response</span>
+              <span class="file-size">16 KB</span>
+            </a>
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/business-case-studies/02-nz-retail-sales-diagnostic.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> NZ Retail Sales Diagnostic</span>
+              <span class="file-size">15 KB</span>
+            </a>
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/business-case-studies/03-market-opportunity-saas-nz.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Market Opportunity: SaaS in NZ</span>
+              <span class="file-size">14 KB</span>
+            </a>
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/business-case-studies/04-sales-metrics-that-matter.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Sales Metrics That Matter</span>
+              <span class="file-size">16 KB</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Practice Lab -->
+      <div class="tab-panel" id="tab-practice">
+        <div class="collection-card animate d3">
+          <div class="collection-header">
+            <h3>Sales Practice Lab</h3>
+            <p>Mock discovery calls, cold outreach experiments, book notes, objection roleplay logs, and a learning roadmap. Documenting the journey from day one.</p>
+          </div>
+          <div class="collection-files">
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/sales-practice-lab/01-mock-discovery-calls.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Mock Discovery Calls</span>
+              <span class="file-size">17 KB</span>
+            </a>
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/sales-practice-lab/02-cold-outreach-experiments.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Cold Outreach Experiments</span>
+              <span class="file-size">11 KB</span>
+            </a>
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/sales-practice-lab/03-book-notes-and-takeaways.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Book Notes & Takeaways</span>
+              <span class="file-size">11 KB</span>
+            </a>
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/sales-practice-lab/04-objection-roleplay-log.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Objection Roleplay Log</span>
+              <span class="file-size">12 KB</span>
+            </a>
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/sales-practice-lab/05-learning-roadmap.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Learning Roadmap</span>
+              <span class="file-size">12 KB</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- NZ Policy -->
+      <div class="tab-panel" id="tab-policy">
+        <div class="collection-card animate d3">
+          <div class="collection-header">
+            <h3>NZ Policy & Data Analysis</h3>
+            <p>Data-driven analysis of Aotearoa New Zealand's housing crisis, cost of living, and public policy. Numbers, context, and honest questions — no party lines.</p>
+          </div>
+          <div class="collection-files">
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/nz-policy-analysis/housing/housing-crisis-data.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Housing Crisis Data</span>
+              <span class="file-size">4 KB</span>
+            </a>
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/nz-policy-analysis/cost-of-living/beyond-cpi.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Beyond CPI: Cost of Living</span>
+              <span class="file-size">4 KB</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quill Resources -->
+      <div class="tab-panel" id="tab-quill">
+        <div class="collection-card animate d3">
+          <div class="collection-header">
+            <h3>Quill — Ghostwriting Resources</h3>
+            <p>Internal resources for the Quill ghostwriting service — onboarding kit, sample posts, and process documentation.</p>
+          </div>
+          <div class="collection-files">
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/linkedin-ghostwriting/onboarding-kit.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Onboarding Kit</span>
+              <span class="file-size">7 KB</span>
+            </a>
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/linkedin-ghostwriting/sample-posts.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Sample Posts (5 voices)</span>
+              <span class="file-size">6 KB</span>
+            </a>
+            <a class="file-item" href="https://github.com/ZephrBrennanOfficial/zephr-brennan/blob/main/linkedin-ghostwriting/README.md" target="_blank">
+              <span class="file-name"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Service Overview</span>
+              <span class="file-size">3 KB</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- About -->
+  <div class="section-full" id="about">
+    <div class="section-inner">
+      <p class="section-label animate d1">About</p>
+      <h2 class="section-heading animate d2">The person behind <span class="gold">the work</span></h2>
+      <div class="about-grid">
+        <div class="about-text animate d3">
+          <p>I'm Zephr — an early-career professional based in <strong>Auckland, Aotearoa New Zealand</strong>. My background spans customer service, telefundraising, and freelance work in theatre and makeup artistry. None of that is a traditional path into business strategy or tech.</p>
+          <p>But I've learned that <strong>starting from the bottom is a perspective you can't fake</strong>. When you've been the person making the cold calls, fielding the objections, and hearing the rejections — you understand things about sales and human behaviour that no course can teach.</p>
+          <p>I write on Substack, build things publicly on GitHub, and run <strong>Quill</strong> — a LinkedIn ghostwriting service for founders. The goal isn't to skip steps. It's to earn every single one of them.</p>
+          <div class="about-quote">
+            <p>"The view from here teaches you things the top never will."</p>
+          </div>
+        </div>
+        <div class="animate d4" style="display:flex;flex-direction:column;gap:1.25rem">
+          <div class="info-card">
+            <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+            <h3>Background</h3>
+            <p>Customer service · Telefundraising · Theatre & makeup artistry · Early-career sales & strategy</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <h3>Currently building</h3>
+            <p>Quill ghostwriting · Sales frameworks · Substack series · NZ policy analysis · AI workflow tools</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8l4 4-4 4"/><path d="M8 12h8"/></svg></div>
+            <h3>Striving for</h3>
+            <p>A career built on irreplaceable perspective — where the bottom-up view becomes the thing that makes the insight worth paying for.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Socials -->
+  <div class="section" id="socials">
+    <p class="section-label animate d1">Connect</p>
+    <h2 class="section-heading animate d2">Find me <span class="gold">everywhere</span></h2>
+    <p class="section-sub animate d3">Everything I do is public. Here's where to find it all.</p>
+    <div class="socials-grid">
+      <a href="https://zephrbrennanofficial.github.io/portfolio/" target="_blank" class="social-btn animate d1">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Portfolio</span>
+      </a>
+      <a href="https://zephrbrennanofficial.github.io/ghostwriting/" target="_blank" class="social-btn animate d2">
+        <svg viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.832-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+        <span>Quill</span>
+      </a>
+      <a href="https://zephrbrennan.substack.com" target="_blank" class="social-btn animate d3">
+        <svg viewBox="0 0 24 24"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.612V24h21.08V10.612H1.46zM1.46 4.273V1.437h21.08v2.836H1.46z"/></svg>
+        <span>Substack</span>
+      </a>
+      <a href="https://www.linkedin.com/in/zephrbrennan" target="_blank" class="social-btn animate d4">
+        <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14m-.5 15.5v-5.3a3.26 3.26 0 00-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 011.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 001.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 00-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+        <span>LinkedIn</span>
+      </a>
+      <a href="https://github.com/ZephrBrennanOfficial" target="_blank" class="social-btn animate d5">
+        <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 002 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/></svg>
+        <span>GitHub</span>
+      </a>
+      <a href="https://twitter.com/ZephrBrennan" target="_blank" class="social-btn animate d6">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        <span>Twitter / X</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-name">Zephr Brennan</div>
+    <div class="footer-links">
+      <a href="https://zephrbrennanofficial.github.io/portfolio/" target="_blank">Portfolio</a>
+      <a href="https://zephrbrennanofficial.github.io/ghostwriting/" target="_blank">Quill</a>
+      <a href="https://zephrbrennan.substack.com" target="_blank">Substack</a>
+      <a href="https://www.linkedin.com/in/zephrbrennan" target="_blank">LinkedIn</a>
+      <a href="https://github.com/ZephrBrennanOfficial" target="_blank">GitHub</a>
+    </div>
+    <p>&copy; 2026 Zephr Brennan · <span class="gold">Building in public</span> · Auckland, Aotearoa NZ</p>
+  </footer>
+
+  <script>
+    // Scroll progress + nav + scroll-to-top
+    const progressBar=document.getElementById('scrollProgress');
+    const scrollTopBtn=document.getElementById('scrollTop');
+    const nav=document.getElementById('mainNav');
+    window.addEventListener('scroll',()=>{
+      const s=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;
+      progressBar.style.width=s+'%';
+      scrollTopBtn.classList.toggle('visible',window.scrollY>400);
+      nav.classList.toggle('scrolled',window.scrollY>20);
+    });
+
+    // Animate on scroll
+    const observer=new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){entry.target.classList.add('in-view');observer.unobserve(entry.target);}
+      });
+    },{threshold:0.1});
+    document.querySelectorAll('.animate').forEach(el=>observer.observe(el));
+
+    // Tab switching
+    function switchTab(el,panelId){
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById(panelId).classList.add('active');
+    }
+
+    // Close nav on link click (mobile)
+    document.querySelectorAll('#navLinks a').forEach(a=>a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('open')));
+  </script>
+</body>
+</html>

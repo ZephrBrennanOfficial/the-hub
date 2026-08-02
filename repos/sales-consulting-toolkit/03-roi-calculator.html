@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Process ROI & Value Impact Calculator | Zephr Brennan</title>
+    <style>
+        :root {
+            --bg-dark: #080d1a;
+            --bg-card: rgba(15, 23, 42, 0.75);
+            --bg-card-hover: rgba(30, 41, 59, 0.85);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --border-glow: rgba(99, 102, 241, 0.4);
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #3b82f6 100%);
+            --accent-green: #10b981;
+            --accent-purple: #a855f7;
+            --accent-blue: #3b82f6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-highlight: #cbd5e1;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 2rem 1rem;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.12) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.35rem 0.9rem;
+            border-radius: 9999px;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: #818cf8;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        header h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.75rem;
+        }
+
+        .panel-title span {
+            color: #818cf8;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .input-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-highlight);
+        }
+
+        .input-value-badge {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #818cf8;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 0.2rem 0.6rem;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .input-field-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        input[type="number"] {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.6rem 0.8rem;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            width: 130px;
+            font-weight: 600;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="number"]:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            flex: 1;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #6366f1;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.8);
+            transition: transform 0.1s, background-color 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            background: #818cf8;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .metric-card:hover {
+            border-color: var(--border-glow);
+            transform: translateY(-2px);
+        }
+
+        .metric-card.highlight {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%);
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            grid-column: span 2;
+        }
+
+        .metric-title {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .metric-card.highlight .metric-value {
+            font-size: 2.3rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .metric-subtext {
+            font-size: 0.8rem;
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .comparison-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .bar-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .bar-track {
+            height: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 7px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 7px;
+            transition: width 0.4s ease-out;
+        }
+
+        .bar-fill.current {
+            background: #64748b;
+        }
+
+        .bar-fill.projected {
+            background: var(--primary-gradient);
+        }
+
+        .insights-card {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.25rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #d1fae5;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+
+        footer a {
+            color: #818cf8;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="badge">Sales Consulting Toolkit</div>
+        <h1>Sales Process ROI & Revenue Impact Calculator</h1>
+        <p>Model the financial gain of optimizing conversion rates, streamlining discovery, and eliminating deal friction across your sales pipeline.</p>
+    </header>
+
+    <div class="calculator-grid">
+        <!-- INPUT PANEL -->
+        <div class="panel">
+            <div class="panel-title">
+                <span>⚙️</span> Baseline Pipeline Parameters
+            </div>
+
+            <!-- Input 1: Monthly Leads -->
+            <div class="input-group">
+                <div class="input-header">
+                    <label class="input-label" for="leadsInput">Monthly Qualified Leads / Opportunities</label>
+                    <span class="input-value-badge" id="leadsBadge">500</span>
+                </div>
+                <div class="input-field-wrapper">
+                    <input type="range" id="leadsSlider" min="20" max="5000" step="10" value="500">
+                    <input type="number" id="leadsInput" min="1" max="50000" value="500">
+                </div>
+            </div>
+
+            <!-- Input 2: Current Conversion Rate -->
+            <div class="input-group">
+                <div class="input-header">
+                    <label class="input-label" for="convInput">Current Win / Conversion Rate (%)</label>
+                    <span class="input-value-badge" id="convBadge">3.0%</span>
+                </div>
+                <div class="input-field-wrapper">
+                    <input type="range" id="convSlider" min="0.2" max="20.0" step="0.1" value="3.0">
+                    <input type="number" id="convInput" min="0.1" max="100" step="0.1" value="3.0">
+                </div>
+            </div>
+
+            <!-- Input 3: Average Deal Size -->
+            <div class="input-group">
+                <div class="input-header">
+                    <label class="input-label" for="dealInput">Average Deal Value ($ NZD / USD)</label>
+                    <span class="input-value-badge" id="dealBadge">$3,500</span>
+                </div>
+                <div class="input-field-wrapper">
+                    <input type="range" id="dealSlider" min="500" max="50000" step="500" value="3500">
+                    <input type="number" id="dealInput" min="100" max="500000" step="100" value="3500">
+                </div>
+            </div>
+
+            <div class="panel-title" style="margin-top: 0.5rem;">
+                <span>🚀</span> Projected Optimization Targets
+            </div>
+
+            <!-- Input 4: Expected Conversion Rate Lift -->
+            <div class="input-group">
+                <div class="input-header">
+                    <label class="input-label" for="liftInput">Target Conversion Increase (+ Absolute % Points)</label>
+                    <span class="input-value-badge" id="liftBadge">+1.5%</span>
+                </div>
+                <div class="input-field-wrapper">
+                    <input type="range" id="liftSlider" min="0.1" max="10.0" step="0.1" value="1.5">
+                    <input type="number" id="liftInput" min="0.1" max="30.0" step="0.1" value="1.5">
+                </div>
+            </div>
+
+            <!-- Input 5: Estimated Deal Value -->
+            <div class="input-group">
+                <div class="input-header">
+                    <label class="input-label" for="feeInput">Estimated Investment ($)</label>
+                    <span class="input-value-badge" id="feeBadge">$8,500</span>
+                </div>
+                <div class="input-field-wrapper">
+                    <input type="range" id="feeSlider" min="1000" max="50000" step="500" value="8500">
+                    <input type="number" id="feeInput" min="500" max="200000" step="500" value="8500">
+                </div>
+            </div>
+        </div>
+
+        <!-- OUTPUT PANEL -->
+        <div class="panel">
+            <div class="panel-title">
+                <span>📈</span> Financial Impact & ROI Projection
+            </div>
+
+            <div class="results-grid">
+                <div class="metric-card">
+                    <div class="metric-title">Current Monthly Revenue</div>
+                    <div class="metric-value" id="currentMonthlyRev">$52,500</div>
+                    <div class="metric-subtext" style="color: var(--text-muted)" id="currentDeals">15 deals / mo</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Projected Monthly Revenue</div>
+                    <div class="metric-value" id="projMonthlyRev">$78,750</div>
+                    <div class="metric-subtext" id="projDeals">22.5 deals / mo</div>
+                </div>
+
+                <div class="metric-card highlight">
+                    <div class="metric-title" style="color: #c084fc">Net Annual Revenue Uplift</div>
+                    <div class="metric-value" id="annualGain">$315,000</div>
+                    <div class="metric-subtext" id="monthlyGainSub text">+ $26,250 additional revenue every month</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Estimated ROI Multiplier</div>
+                    <div class="metric-value" id="roiPercent">3,606%</div>
+                    <div class="metric-subtext" id="roiSubtext">37.1x return on investment</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Payback Period</div>
+                    <div class="metric-value" id="paybackDays">9.7 Days</div>
+                    <div class="metric-subtext">Time to recoup engagement cost</div>
+                </div>
+            </div>
+
+            <!-- VISUAL COMPARISON BARS -->
+            <div class="comparison-container">
+                <div class="bar-group">
+                    <div class="bar-label">
+                        <span>Current Annual Revenue Baseline</span>
+                        <strong id="barCurrentText">$630,000</strong>
+                    </div>
+                    <div class="bar-track">
+                        <div class="bar-fill current" id="barCurrentFill" style="width: 66%;"></div>
+                    </div>
+                </div>
+
+                <div class="bar-group">
+                    <div class="bar-label">
+                        <span>Projected Annual Revenue (Post-Optimization)</span>
+                        <strong id="barProjText" style="color: #a855f7">$945,000</strong>
+                    </div>
+                    <div class="bar-track">
+                        <div class="bar-fill projected" id="barProjFill" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="insights-card" id="insightText">
+                💡 <strong>Executive Insight:</strong> Improving conversion rate from <strong>3.0% to 4.5%</strong> generates an extra <strong>$26,250/month</strong> without spending a single extra dollar on lead acquisition or ad spend.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Designed & Built by <strong>Zephr Brennan</strong> | Sales Consulting & Process Optimization Frameworks<br>
+        © 2026 Zephr Brennan. All Rights Reserved.
+    </footer>
+</div>
+
+<script>
+    // DOM Elements
+    const leadsSlider = document.getElementById('leadsSlider');
+    const leadsInput = document.getElementById('leadsInput');
+    const leadsBadge = document.getElementById('leadsBadge');
+
+    const convSlider = document.getElementById('convSlider');
+    const convInput = document.getElementById('convInput');
+    const convBadge = document.getElementById('convBadge');
+
+    const dealSlider = document.getElementById('dealSlider');
+    const dealInput = document.getElementById('dealInput');
+    const dealBadge = document.getElementById('dealBadge');
+
+    const liftSlider = document.getElementById('liftSlider');
+    const liftInput = document.getElementById('liftInput');
+    const liftBadge = document.getElementById('liftBadge');
+
+    const feeSlider = document.getElementById('feeSlider');
+    const feeInput = document.getElementById('feeInput');
+    const feeBadge = document.getElementById('feeBadge');
+
+    // Display Elements
+    const currentMonthlyRevEl = document.getElementById('currentMonthlyRev');
+    const currentDealsEl = document.getElementById('currentDeals');
+    const projMonthlyRevEl = document.getElementById('projMonthlyRev');
+    const projDealsEl = document.getElementById('projDeals');
+    const annualGainEl = document.getElementById('annualGain');
+    const monthlyGainSubTextEl = document.getElementById('monthlyGainSub text');
+    const roiPercentEl = document.getElementById('roiPercent');
+    const roiSubtextEl = document.getElementById('roiSubtext');
+    const paybackDaysEl = document.getElementById('paybackDays');
+    const barCurrentText = document.getElementById('barCurrentText');
+    const barProjText = document.getElementById('barProjText');
+    const barCurrentFill = document.getElementById('barCurrentFill');
+    const barProjFill = document.getElementById('barProjFill');
+    const insightText = document.getElementById('insightText');
+
+    function formatCurrency(val) {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 0
+        }).format(val).replace('USD', '$');
+    }
+
+    function syncPair(slider, input, badge, prefix = '', suffix = '') {
+        slider.addEventListener('input', (e) => {
+            input.value = e.target.value;
+            badge.textContent = prefix + e.target.value + suffix;
+            calculate();
+        });
+        input.addEventListener('input', (e) => {
+            slider.value = e.target.value;
+            badge.textContent = prefix + e.target.value + suffix;
+            calculate();
+        });
+    }
+
+    syncPair(leadsSlider, leadsInput, leadsBadge, '');
+    syncPair(convSlider, convInput, convBadge, '', '%');
+    syncPair(dealSlider, dealInput, dealBadge, '$', '');
+    syncPair(liftSlider, liftInput, liftBadge, '+', '%');
+    syncPair(feeSlider, feeInput, feeBadge, '$', '');
+
+    function calculate() {
+        const leads = parseFloat(leadsInput.value) || 0;
+        const currentConv = parseFloat(convInput.value) || 0;
+        const dealVal = parseFloat(dealInput.value) || 0;
+        const lift = parseFloat(liftInput.value) || 0;
+        const fee = parseFloat(feeInput.value) || 0;
+
+        // Calculations
+        const currentDeals = leads * (currentConv / 100);
+        const currentMonthlyRev = currentDeals * dealVal;
+        const currentAnnualRev = currentMonthlyRev * 12;
+
+        const projConv = currentConv + lift;
+        const projDeals = leads * (projConv / 100);
+        const projMonthlyRev = projDeals * dealVal;
+        const projAnnualRev = projMonthlyRev * 12;
+
+        const monthlyGain = projMonthlyRev - currentMonthlyRev;
+        const annualGain = monthlyGain * 12;
+
+        const netAnnualGain = annualGain - fee;
+        const roiPercent = fee > 0 ? (netAnnualGain / fee) * 100 : 0;
+        const roiMultiplier = fee > 0 ? (annualGain / fee) : 0;
+        const paybackDays = monthlyGain > 0 ? (fee / (monthlyGain / 30.41)) : 0;
+
+        // UI Updates
+        currentMonthlyRevEl.textContent = formatCurrency(currentMonthlyRev);
+        currentDealsEl.textContent = `${currentDeals.toFixed(1)} deals / mo`;
+
+        projMonthlyRevEl.textContent = formatCurrency(projMonthlyRev);
+        projDealsEl.textContent = `${projDeals.toFixed(1)} deals / mo (+${(projDeals - currentDeals).toFixed(1)})`;
+
+        annualGainEl.textContent = formatCurrency(annualGain);
+        monthlyGainSubTextEl.textContent = `+ ${formatCurrency(monthlyGain)} additional revenue every month`;
+
+        roiPercentEl.textContent = `${roiPercent.toLocaleString('en-US', { maximumFractionDigits: 0 })}%`;
+        roiSubtextEl.textContent = `${roiMultiplier.toFixed(1)}x return on ${formatCurrency(fee)} fee`;
+
+        paybackDaysEl.textContent = paybackDays > 0 ? (paybackDays < 30 ? `${paybackDays.toFixed(1)} Days` : `${(paybackDays / 30.41).toFixed(1)} Months`) : 'N/A';
+
+        // Bars
+        barCurrentText.textContent = formatCurrency(currentAnnualRev);
+        barProjText.textContent = formatCurrency(projAnnualRev);
+
+        const maxVal = Math.max(currentAnnualRev, projAnnualRev);
+        const currentPct = maxVal > 0 ? (currentAnnualRev / maxVal) * 100 : 0;
+        const projPct = maxVal > 0 ? (projAnnualRev / maxVal) * 100 : 100;
+
+        barCurrentFill.style.width = `${currentPct}%`;
+        barProjFill.style.width = `${projPct}%`;
+
+        // Insight Text
+        insightText.innerHTML = `💡 <strong>Executive Insight:</strong> Improving conversion rate from <strong>${currentConv.toFixed(1)}% to ${projConv.toFixed(1)}%</strong> generates an extra <strong>${formatCurrency(monthlyGain)}/month</strong> (${formatCurrency(annualGain)}/yr) without spending a single extra dollar on lead acquisition.`;
+    }
+
+    // Initial calculation
+    calculate();
+</script>
+
+</body>
+</html>
